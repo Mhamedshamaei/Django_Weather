@@ -17,7 +17,8 @@ def main(request):
 
 
 def get_weather(request, slug):
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=4769dd9ede3991407e58d6a7e2a28fea'
+    api_key = 'your api key'
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid={api_key}'
     city = slug
     city_weather = requests.get(
         url.format(city)).json()
