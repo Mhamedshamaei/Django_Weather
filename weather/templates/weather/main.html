@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Django weather app{% endblock %}
+{% block body %}
+    <div style="width: 100vw" class="d-flex justify-content-center">
+        <form method="post" action="{% url 'weather:main' %}" class="mb-3 d-flex mt-5">
+            {% csrf_token %}
+            <input type="text" class="form-control" placeholder="City name" aria-label="Recipient's username"
+                   aria-describedby="button-addon2" name="name">
+            <button class="btn btn-outline-dark ms-1" type="submit" id="button-addon2">Search</button>
+        </form>
+    </div>
+    <div class="row mt-4 px-5" style="width: 100vw">
+        {% for i in all_city %}
+            <div class="col-3 col-md-11 mt-4">
+                <div style="width: 300px;height: 150px"
+                     class="border rounded p-3 d-flex align-items-center justify-content-center w-md-100">
+                    <a href="{% url 'weather:get_weather' i.name %}" style="text-decoration: none;color: black">
+                        <h4>{{ i.name | capfirst }}</h4>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

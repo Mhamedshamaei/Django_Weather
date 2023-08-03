@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}{{ weather.city }} weather{% endblock %}
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center" style="width: 100vw">
+        <div class="card shadow mt-5 border" style="width: 25rem;">
+            <div class="card-body">
+                <h5 class="text-center"><a href="{% url 'weather:main' %}" style="text-decoration: none;color: black"><i
+                        class="bi bi-backspace me-3"></i></a>{{ weather.city | capfirst }} weather</h5>
+                <p class="text-center mt-3"><i class="bi bi-thermometer-half me-2"></i>Temperature : {{ weather.temperature }}</p>
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <p class="text-center mt-3"><i class="bi bi-water me-2"></i>Humidity : {{ weather.humidity }}</p>
+                <p class="text-center mt-3"><i class="bi bi-wind me-2"></i>Wind speed : {{ weather.wind }}</p>
+                <p class="text-center mt-3"><i class="bi bi-cloud-fog me-2"></i>Pressure : {{ weather.pressure }}</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["min", "max"],
+                datasets: [{
+                    label: "today weather",
+                    backgroundColor: 'lightblue',
+                    borderColor: 'royalblue',
+                    data: [{{ weather.min }}, {{ weather.max }}],
+                }]
+            },
+            options: {
+                layout: {
+                    padding: 10,
+                },
+                legend: {
+                    position: 'bottom',
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: false,
+                            labelString: 'Month of the Year'
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}
