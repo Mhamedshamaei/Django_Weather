@@ -1,2 +1,2 @@
 # Django_Weather
-full weather website using django
+Sample project for use django to get weather api
